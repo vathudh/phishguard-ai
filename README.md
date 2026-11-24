@@ -2,6 +2,8 @@
 
 PhishGuard AI is an explainable phishing-email analysis platform. It combines a Scikit-learn classifier with transparent URL, linguistic, credential-theft, and sender-impersonation checks. The dashboard works locally and stores scan history in SQLite.
 
+For the complete technical architecture, data pipeline, evaluation, API reference, security design, deployment details, viva preparation, and work-completed record, read [docs/DETAILED_PROJECT_README.md](docs/DETAILED_PROJECT_README.md).
+
 ## Features
 
 - Paste an email or upload a `.eml` file.
