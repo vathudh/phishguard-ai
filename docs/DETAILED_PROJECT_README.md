@@ -18,6 +18,93 @@ The intended user journey is simple:
 4. Record whether the result was correct.
 5. Review locally stored scan history or export it as JSON.
 
+## Quick Start Reference
+
+This section intentionally includes every essential operational item from the root README, so this document can be used on its own.
+
+### Feature summary
+
+- Paste an email or upload an `.eml` file.
+- Receive a phishing, suspicious, or likely-safe verdict.
+- View a risk score, model confidence, class probabilities, reasons, URLs, and recommended action.
+- Analyze IP-address URLs, URL shorteners, suspicious TLDs, complex domains, urgency phrases, credential requests, and sender-impersonation clues.
+- Save local scan history and analyst feedback in SQLite.
+- Export scan history as JSON.
+- Retrain the Scikit-learn model and regenerate metrics.
+- Run automated tests locally and through GitHub Actions.
+- Run locally, in Docker, or through the supplied Render configuration.
+
+### Environment setup
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+If `py -3.12` is unavailable, use an installed Python 3.10+ interpreter.
+
+### Run the web application
+
+```powershell
+python app.py
+```
+
+Open `http://127.0.0.1:5000` in a browser.
+
+On Windows, the one-command setup-and-run path is:
+
+```powershell
+.\run_local.ps1
+```
+
+### Run tests
+
+```powershell
+python -m pytest tests -q
+```
+
+### Train and evaluate
+
+```powershell
+python -m src.train_model
+```
+
+Training refreshes:
+
+- `models/phishing_email_model.joblib`
+- `models/confusion_matrix.png`
+- `models/metrics_report.txt`
+
+### Command-line prediction
+
+```powershell
+python src/predict_email.py "URGENT: your account is locked. Verify your password at http://example-login.com"
+```
+
+Expected format:
+
+```text
+Prediction: Phishing
+Probabilities:
+  phishing: 93.20%
+  safe: 6.80%
+```
+
+### Docker quick start
+
+```powershell
+docker build -t phishguard-ai .
+docker run -p 5000:5000 phishguard-ai
+```
+
+### Hosting quick reference
+
+- Read `docs/HOSTING.md` before using Docker or Render.
+- The GitHub repository contains the deployable model, tests, metrics, Docker files, and CI workflow.
+- Raw corpus downloads, generated training data, SQLite history, exports, and virtual environments are intentionally excluded from GitHub.
+- For Vercel, follow the storage changes in Section 17 before claiming persistent history.
+
 ## 2. Problem Statement
 
 Phishing emails use fraudulent links, impersonated senders, urgent language, malicious attachments, and requests for credentials to manipulate users. Many basic email classifiers provide only a binary result, leaving the user unable to understand why an email is risky.
