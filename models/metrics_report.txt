@@ -1,0 +1,15 @@
+Dataset: training_emails.csv (3,000 rows)
+Accuracy: 90.93%
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    phishing       0.93      0.89      0.91       375
+        safe       0.89      0.93      0.91       375
+
+    accuracy                           0.91       750
+   macro avg       0.91      0.91      0.91       750
+weighted avg       0.91      0.91      0.91       750
+
+Confusion matrix saved to: C:\Users\mohamedvathudh\Documents\Codex\2026-09-14\phishing-email-detection-model-build-a\outputs\phishing_email_detection_model\models\confusion_matrix.png
+Model saved to: C:\Users\mohamedvathudh\Documents\Codex\2026-09-14\phishing-email-detection-model-build-a\outputs\phishing_email_detection_model\models\phishing_email_model.joblib

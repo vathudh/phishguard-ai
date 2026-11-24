@@ -1,0 +1,9 @@
+__pycache__/
+.pytest_cache/
+.venv/
+data/phishguard.db
+data/exports/
+data/raw/
+data/training_emails.csv
+models/*.joblib
+!models/phishing_email_model.joblib

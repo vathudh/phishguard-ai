@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+data/phishguard.db
+data/exports/
+data/raw/
+data/training_emails.csv
+.venv/

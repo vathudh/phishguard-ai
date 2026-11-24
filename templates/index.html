@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explainable phishing email detection workspace">
+  <title>PhishGuard AI | Email Threat Analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">PG</span><div><strong>PhishGuard</strong><small>AI Threat Analysis</small></div></div>
+      <nav><a class="active" href="#scanner">Scanner</a><a href="#history">Scan history</a><a href="#method">Methodology</a></nav>
+      <section class="side-note"><span class="status-dot"></span><p><b>Local-first privacy</b><br>Scans and history stay on this device.</p></section>
+    </aside>
+    <section class="content">
+      <header class="topbar"><div><p class="eyebrow">SECURITY OPERATIONS WORKSPACE</p><h1>Email threat analysis, with reasons.</h1></div><button id="exportButton" class="icon-button" title="Export scan history">Export history</button></header>
+      <section id="scanner" class="scanner-grid">
+        <form id="scanForm" class="panel scan-panel">
+          <div class="panel-heading"><div><p class="eyebrow">NEW SCAN</p><h2>Analyze an email</h2></div><span class="local-badge">On-device</span></div>
+          <label>Subject <input id="subject" maxlength="300" placeholder="e.g. Action required: verify your account"></label>
+          <label>Sender <input id="sender" maxlength="300" placeholder="e.g. support@example.com"></label>
+          <label>Email content <textarea id="emailText" minlength="12" maxlength="100000" required placeholder="Paste the email message here. URLs, urgency language, and account requests are analyzed."></textarea></label>
+          <div class="form-actions"><button type="submit" class="primary-button">Run security scan</button><button type="button" id="demoButton" class="secondary-button">Load demo</button></div>
+          <div class="upload-row"><span>or</span><label class="file-label">Upload .eml<input id="emlFile" type="file" accept=".eml" hidden></label><small>Maximum file size: 2 MB</small></div>
+          <p id="formMessage" class="form-message" role="status"></p>
+        </form>
+        <section id="resultPanel" class="panel result-panel empty-state" aria-live="polite">
+          <div class="scan-placeholder"><span class="shield">◇</span><h2>Ready to inspect</h2><p>Run a scan to see a risk score, AI confidence, suspicious signals, and URL intelligence.</p></div>
+        </section>
+      </section>
+      <section id="history" class="panel history-panel"><div class="panel-heading"><div><p class="eyebrow">LOCAL ACTIVITY</p><h2>Recent scans</h2></div><span id="historyCount" class="count-badge">0</span></div><div id="historyList" class="history-list"><p class="muted">No scans saved yet.</p></div></section>
+      <section id="method" class="method-grid"><article><span>01</span><h3>Machine learning</h3><p>TF-IDF text features and phishing-signal features are evaluated by a calibrated support-vector classifier.</p></article><article><span>02</span><h3>Threat signals</h3><p>Rules inspect urgency, credential requests, sender impersonation and risky URL structures.</p></article><article><span>03</span><h3>Explainable decision</h3><p>The final score blends model probability with visible, security-focused indicators.</p></article></section>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
