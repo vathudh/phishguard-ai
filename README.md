@@ -4,6 +4,31 @@ PhishGuard AI is an explainable phishing-email analysis platform. It combines a 
 
 For the complete technical architecture, data pipeline, evaluation, API reference, security design, deployment details, viva preparation, and work-completed record, read [docs/DETAILED_PROJECT_README.md](docs/DETAILED_PROJECT_README.md).
 
+## Brief Project Description
+
+PhishGuard AI is a cybersecurity web application that helps users inspect suspicious emails before interacting with them. A user can paste an email or upload an `.eml` file. The system extracts text and URL features, applies a trained Scikit-learn classifier, checks transparent phishing indicators, and returns a phishing/suspicious/safe verdict with a risk score and explanation. It also keeps local scan history and feedback for demonstration and review.
+
+## Architecture at a Glance
+
+```text
+User browser
+    |
+    | Paste email / Upload .eml
+    v
+Flask dashboard and REST API
+    |
+    +--> Email parsing and validation
+    |
+    +--> ML pipeline: TF-IDF + security features + calibrated LinearSVC
+    |
+    +--> Explainability engine: URL, urgency, credential, sender checks
+    |
+    +--> SQLite: local scan history and analyst feedback
+    |
+    v
+Verdict, 0-100 risk score, evidence, recommendation, export
+```
+
 ## Features
 
 - Paste an email or upload a `.eml` file.

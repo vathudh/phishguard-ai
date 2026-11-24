@@ -103,6 +103,45 @@ The project is designed for education, research demonstrations, and first-pass t
              +-----------------------+
 ```
 
+### 5.1 Component Responsibilities
+
+| Layer | Components | Responsibility |
+|---|---|---|
+| Presentation | `templates/index.html`, `static/styles.css`, `static/app.js` | Provides the scan form, risk display, explanation panels, local history, feedback, and export controls. |
+| Web/API | `app.py` | Defines Flask routes, validates requests, handles `.eml` uploads, applies response security headers, and coordinates storage. |
+| Parsing | `extract_eml_text()` | Extracts readable plain-text or HTML message content while skipping attachments. |
+| ML feature layer | `email_features.py` | Produces TF-IDF text features and numerical phishing signals such as URL count, urgent vocabulary, IP URLs, and suspicious TLDs. |
+| Classification layer | Scikit-learn pipeline | Uses a calibrated LinearSVC to estimate phishing and safe probabilities. |
+| Explainability layer | `security_analyzer.py` | Converts model output and rule findings into a human-readable verdict, risk score, URL intelligence, and recommendation. |
+| Persistence layer | `database.py`, SQLite | Stores a limited email preview, verdict, score, indicators, timestamps, and user feedback locally. |
+| Delivery layer | Docker, Waitress, GitHub Actions | Supports reproducible local execution, container deployment, and automated test execution. |
+
+### 5.2 Detailed Request Flow
+
+```text
+1. User submits pasted content or an .eml file.
+2. Flask validates file size, content length, and extension.
+3. The parser extracts subject, sender, and readable email body.
+4. The ML pipeline converts content into TF-IDF and numeric security features.
+5. The calibrated classifier estimates phishing and safe probabilities.
+6. The rule engine inspects urgency, credentials, sender mismatch, and URLs.
+7. The hybrid score blends ML phishing probability with rule-based risk.
+8. SQLite saves a privacy-limited scan record and optional feedback.
+9. The browser receives verdict, score, evidence, URLs, and recommendation.
+```
+
+### 5.3 Deployment Boundaries
+
+```text
+Local / Docker / Render
+  Browser --> Flask + ML model --> SQLite or mounted persistent data volume
+
+Vercel serverless adaptation
+  Browser --> Flask function + ML model --> external managed database
+```
+
+The local version is fully implemented. A Vercel production deployment must replace persistent SQLite storage with a managed database because serverless filesystem storage is not durable.
+
 ## 6. Project Structure
 
 ```text
